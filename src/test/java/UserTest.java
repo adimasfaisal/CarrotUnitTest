@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserTest {
 
     @Test
+    @DisplayName("User List Check")
     void testToString() {
         ArrayList<User> users = new ArrayList<>();
         users.add(new User("Adimas", 1, 50));
@@ -32,4 +33,17 @@ class UserTest {
         dicky.getPoint(30);
         assertEquals(80, dicky.getPoint());
     }
+
+    @Test
+    @DisplayName("Point History")
+    void testPointHistory(){
+        ArrayList<User> users = new ArrayList<>();
+        users.add(new User("Adimas", 1, 50));
+        users.add(new User("Dicky", 2, 50));
+        PointHistory.transaction(users.get(1), users.get(0), 50);
+        assertAll(() -> assertEquals(100, users.get(0).getPoint()),
+                () -> assertEquals(0, users.get(1).getPoint()),
+                () -> assertEquals(1, PointHistory.pointHistoryList.size()));
+    }
+
 }
